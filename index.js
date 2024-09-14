@@ -13,6 +13,7 @@ if (todos) {
 form.addEventListener("submit", function(event) {
     event.preventDefault(); //デフォルトのイベントを発生しないように中断できる
     add(); //画面に追加
+    clearInput(); //プレースホルダーを空に
 });
 
 function add(todo) {
@@ -47,4 +48,8 @@ function saveData() {
         todos.push(list.innerText);
     });
     localStorage.setItem("todos", JSON.stringify(todos));
+}
+
+function clearInput() {
+    input.value = "";
 }
