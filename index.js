@@ -38,13 +38,30 @@ function add(todo) {
             saveData();
         });
 
-        //右クリックで削除（スマホなら長押し）
-        li.addEventListener("contextmenu", function (event) { //contextmenu で右クリック検知
+        // 右クリックで削除（デスクトップ向け）
+         li.addEventListener("contextmenu", function (event) { //contextmenu で右クリック検知
             event.preventDefault(); // 右クリックのデフォルトイベントをブロック
             if (confirm("本当に削除しますか？")) {
                 li.remove();
                 saveData();
             }
+        });
+
+        // スマホ向けの長押し検知
+        let touchDuration = 0;
+        let touchTimer;
+
+        li.addEventListener("touchstart", function() {
+            touchTimer = setTimeout(function() {
+                if (confirm("本当に削除しますか？")) {
+                    li.remove();
+                    saveData();
+                }
+            }, 500); // 500ミリ秒で長押しとみなす
+        });
+
+        li.addEventListener("touchend", function() {
+            clearTimeout(touchTimer); // タイマーをクリア
         });
 
         ul.appendChild(li); //ulのこどもとしてliを追加
